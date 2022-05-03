@@ -11,8 +11,8 @@
         <span class="text-bold text-subtitle1">OMG! </span> STAR WARS
       </p>
       <div class="flex">
-        <p class="text-bold text-h6 q-mr-md">FILMS</p>
-        <p clickable @click="$router.push('/People')" class="text-h6 q-mr-md text-grey-7">PEOPLE</p>
+        <p clickable @click="$router.push('/')" class="text-h6 q-mr-md text-grey-7">FILMS</p>
+        <p class="text-bold text-h6 q-mr-md">PEOPLE</p>
         <p class="text-h6 q-mr-md text-grey-7">SPECIES</p>
       </div>
     </div>
