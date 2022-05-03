@@ -85,7 +85,7 @@
 
     <div class="row">
       <template v-for="film in character" :key="film">
-        <div style="width: 100px" class="q-ml-lg">
+        <div style="width: 105px" class="q-ml-md">
           <img width="100" src="../assets/no-image.jpeg" alt="" />
           <p class="text-caption text-center text-bold">{{ film.film }}</p>
         </div>
