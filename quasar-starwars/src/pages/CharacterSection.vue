@@ -20,13 +20,13 @@
       style="position: relative"
     >
       <img
-        :src="data[1].poster"
+        src="../assets/no-image.jpeg"
         alt="Character"
         class="img-character shadow-8"
       />
       <div style="width: 85%">
         <h5 class="text-bold text-uppercase border-name-character text-center">
-          {{ data[1].name }}
+          {{ character.name }}
         </h5>
       </div>
       <div class="q-pb-md" style="margin-top: -30px">
@@ -42,54 +42,52 @@
       <q-card style="width: 41%" class="col-6 q-ml-lg q-mr-sm">
         <p class="sub-title-size text-grey-6 q-pa-sm">HOME WORLD</p>
         <a class="text-links flex flex-center q-pb-lg" href="#">{{
-          data[0].homeWorld
+          character.homeworld
         }}</a>
       </q-card>
       <q-card style="width: 41%" class="col-6 q-mr-lg q-ml-sm">
         <p class="sub-title-size text-grey-6 q-pa-sm">SPECIES</p>
-        <a class="text-links flex flex-center q-pb-lg" href="#">{{
-          data[1].species
-        }}</a>
+        <a class="text-links flex flex-center q-pb-lg" href="#">HUMAN</a>
       </q-card>
     </div>
 
     <div class="row q-mb-md">
       <q-card style="width: 26%" class="col-4 q-ml-lg q-mr-sm">
         <p class="sub-title-size text-grey-6 q-pa-sm">DOB</p>
-        <p class="flex flex-center q-pb-lg">{{ data[1].DOB }}</p>
+        <p class="flex flex-center q-pb-lg">{{ character.birth_year }}</p>
       </q-card>
       <q-card style="width: 26%" class="col-4 q-mr-sm q-ml-sm">
         <p class="sub-title-size text-grey-6 q-pa-sm">HEIGHT</p>
-        <p class="flex flex-center q-pb-lg">{{ data[1].HEIGHT }}</p>
+        <p class="flex flex-center q-pb-lg">{{ character.height }}</p>
       </q-card>
       <q-card style="width: 26%" class="col-4 q-mr-lg q-ml-sm">
         <p class="sub-title-size text-grey-6 q-pa-sm">MASS</p>
-        <p class="flex flex-center q-pb-lg">{{ data[1].MASS }}</p>
+        <p class="flex flex-center q-pb-lg">{{ character.mass }}</p>
       </q-card>
     </div>
 
     <div class="row">
       <q-card style="width: 26%" class="col-4 q-ml-lg q-mr-sm">
         <p class="sub-title-size text-grey-6 q-pa-sm">GENDER</p>
-        <p class="flex flex-center q-pb-lg">{{ data[1].GENDER }}</p>
+        <p class="flex flex-center q-pb-lg">{{ character.gender }}</p>
       </q-card>
       <q-card style="width: 26%" class="col-4 q-mr-sm q-ml-sm">
         <p class="sub-title-size text-grey-6 q-pa-sm">HAIR</p>
-        <p class="flex flex-center q-pb-lg">{{ data[1].HAIR }}</p>
+        <p class="flex flex-center q-pb-lg">{{ character.hair_color }}</p>
       </q-card>
       <q-card style="width: 26%" class="col-4 q-mr-lg q-ml-sm">
         <p class="sub-title-size text-grey-6 q-pa-sm">SKIN</p>
-        <p class="flex flex-center q-pb-lg">{{ data[1].SKIN }}</p>
+        <p class="flex flex-center q-pb-lg">{{ character.skin_color }}</p>
       </q-card>
     </div>
 
     <h6 class="q-ml-lg text-uppercase text-grey-8">Films</h6>
 
     <div class="row">
-      <template v-for="film in data" :key="film">
+      <template v-for="film in character" :key="film">
         <div style="width: 100px" class="q-ml-lg">
-          <img width="100" :src="film.poster" alt="" />
-          <p class="text-caption text-center text-bold">{{ film.title }}</p>
+          <img width="100" src="../assets/no-image.jpeg" alt="" />
+          <p class="text-caption text-center text-bold">{{ film.film }}</p>
         </div>
       </template>
     </div>
@@ -97,10 +95,10 @@
     <h6 class="q-ml-lg text-uppercase text-grey-8">Starships</h6>
 
     <div class="row">
-      <template v-for="film in data" :key="film">
+      <template v-for="starship in character" :key="starship">
         <div style="width: 150px" class="q-ml-lg">
-          <img width="150" height="120" src="../assets/ANewHope.jpg" alt="" />
-          <p class="text-caption text-center text-bold">{{ film.starships }}</p>
+          <img width="150" height="120" src="../assets/no-image.jpeg" alt="" />
+          <p class="text-caption text-center text-bold">{{ starship.starships }}</p>
         </div>
       </template>
     </div>
@@ -108,10 +106,10 @@
     <h6 class="q-ml-lg text-uppercase text-grey-8">vehicles</h6>
 
     <div class="row">
-      <template v-for="film in data" :key="film">
+      <template v-for="vehicle in character" :key="vehicle">
         <div style="width: 150px" class="q-ml-lg">
-          <img width="150" height="120" src="../assets/ANewHope.jpg" alt="" />
-          <p class="text-caption text-center text-bold">{{ film.vehicles }}</p>
+          <img width="150" height="120" src="../assets/no-image.jpeg" alt="" />
+          <p class="text-caption text-center text-bold">{{ vehicle.vehicles }}</p>
         </div>
       </template>
     </div>
@@ -141,7 +139,7 @@ export default defineComponent({
     onMounted(fetchCharacter);
 
 
-    return { data, character };
+    return {  character };
   },
 });
 </script>
