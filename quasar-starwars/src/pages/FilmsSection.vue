@@ -12,18 +12,28 @@
       </p>
       <div class="flex">
         <p class="text-bold text-h6 q-mr-md">FILMS</p>
-        <p clickable @click="$router.push('/People')" class="text-h6 q-mr-md text-grey-7">PEOPLE</p>
+        <p
+          clickable
+          @click="$router.push('/People')"
+          class="text-h6 q-mr-md text-grey-7"
+        >
+          PEOPLE
+        </p>
         <p class="text-h6 q-mr-md text-grey-7">SPECIES</p>
       </div>
     </div>
 
-    <div class="flex justify-around bg-primary">
-      <template v-for="film in data" :key="film">
-        <q-card clickable="true" @click="$router.push('/character')" class="shadow-17 size-card q-mb-md">
+    <div class="flex justify-evenly bg-primary">
+      <template v-for="film in films" :key="film">
+        <q-card
+          clickable="true"
+          @click="$router.push('/character')"
+          class="shadow-17 size-card q-mb-md"
+        >
           <q-card-section class="q-pa-sm">
-            <img width="80" :src="film.poster" :alt="film.alt" />
+            <img width="100" height="120" src="../assets/no-image.jpeg" :alt="film.alt" />
             <p class="text-center text-caption text-bold">
-              {{ film.name }}
+              {{ film.title }}
             </p>
           </q-card-section>
         </q-card>
@@ -33,64 +43,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-//import axios from 'axios';
+import { defineComponent, ref, onMounted } from 'vue';
+import api from '../services/api';
 
-type Film = {
-  poster: string;
-  alt: string;
-  name: string;
-};
 export default defineComponent({
   setup () {
-    //const api = axios;
+    const films = ref([]);
 
-    const data = [
-      {
-        poster:
-          'https://images-na.ssl-images-amazon.com/images/I/91eOgodm4nL.jpg',
-        alt: 'episode1',
-        name: 'The Phantom Manance'
-      },
-      {
-        poster:
-          'https://images-na.ssl-images-amazon.com/images/I/91eOgodm4nL.jpg',
-        alt: 'episode1',
-        name: 'The Phantom Manance'
-      },
-      {
-        poster:
-          'https://images-na.ssl-images-amazon.com/images/I/91eOgodm4nL.jpg',
-        alt: 'episode1',
-        name: 'The Phantom Manance'
-      },
-      {
-        poster:
-          'https://images-na.ssl-images-amazon.com/images/I/91eOgodm4nL.jpg',
-        alt: 'episode1',
-        name: 'The Phantom Manance'
-      },
-      {
-        poster:
-          'https://images-na.ssl-images-amazon.com/images/I/91eOgodm4nL.jpg',
-        alt: 'episode1',
-        name: 'The Phantom Manance'
-      },
-      {
-        poster:
-          'https://images-na.ssl-images-amazon.com/images/I/91eOgodm4nL.jpg',
-        alt: 'episode1',
-        name: 'The Phantom Manance'
-      },
-      {
-        poster:
-          'https://images-na.ssl-images-amazon.com/images/I/91eOgodm4nL.jpg',
-        alt: 'episode1',
-        name: 'The Phantom Manance'
-      }
-    ] as Film[];
+    const fetchFilms = async () => {
+      await api
+        .get('/films')
+        .then(response => (films.value = response.data.results));
+    };
 
-    return { data };
+    onMounted(fetchFilms);
+
+    return { films };
   }
 });
 </script>
@@ -101,7 +69,8 @@ export default defineComponent({
 }
 
 .size-card {
-  width: 95px;
-  height: 190px;
+  width: 115px;
+  height: 180px;
+  border-bottom-right-radius: 15px;
 }
 </style>

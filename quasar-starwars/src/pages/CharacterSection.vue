@@ -43,11 +43,15 @@
     <div class="row q-mb-md">
       <q-card style="width: 41%" class="col-6 q-ml-lg q-mr-sm">
         <p class="sub-title-size text-grey-6 q-pa-sm">HOME WORLD</p>
-        <a class=" text-links flex flex-center q-pb-lg" href="#">{{data[1].homeWorld}}</a>
+        <a class=" text-links flex flex-center q-pb-lg" href="#">{{
+          data[0].homeWorld
+        }}</a>
       </q-card>
       <q-card style="width: 41%" class="col-6 q-mr-lg q-ml-sm">
         <p class="sub-title-size text-grey-6 q-pa-sm">SPECIES</p>
-        <a class=" text-links flex flex-center q-pb-lg" href="#">{{ data[1].species }}</a>
+        <a class=" text-links flex flex-center q-pb-lg" href="#">{{
+          data[1].species
+        }}</a>
       </q-card>
     </div>
 
@@ -117,7 +121,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
+import api from '../services/api';
 
 type Film = {
   poster: string;
@@ -137,6 +142,21 @@ type Film = {
 };
 export default defineComponent({
   setup () {
+
+    const character = ref([])
+    console.log(character)
+
+    const fetchCharacter = async () => {
+      await api.get('people/').then((response) => {
+        character.value = response.data.results
+      })
+    }
+
+    onMounted(fetchCharacter)
+
+
+
+
     const data = [
       {
         poster:
@@ -191,7 +211,7 @@ export default defineComponent({
       }
     ] as Film[];
 
-    return { data };
+    return { data,  character};
   }
 });
 </script>
