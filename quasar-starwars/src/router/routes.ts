@@ -12,7 +12,7 @@ const routes: RouteRecordRaw[] = [
     children: [{ path: '', name: 'people', component: () => import('pages/PeopleSection.vue') }],
   },
   {
-    path: '/person/:id?',
+    path: '/person/:id',
     component: () => import('src/layouts/Character.vue'),
     children: [{ path: '', name: 'characters', component: () => import('pages/CharacterSection.vue') }],
   },

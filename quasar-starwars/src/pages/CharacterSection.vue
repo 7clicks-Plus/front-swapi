@@ -16,7 +16,7 @@
     </div>
 
     <q-card
-      class="size-card flex flex-center q-mt-lg q-mr-lg  q-ml-lg q-mb-md"
+      class="size-card flex flex-center q-mt-lg q-mr-lg q-ml-lg q-mb-md"
       style="position: relative"
     >
       <img
@@ -24,15 +24,13 @@
         alt="Character"
         class="img-character shadow-8"
       />
-      <div style="width: 85%;">
+      <div style="width: 85%">
         <h5 class="text-bold text-uppercase border-name-character text-center">
           {{ data[1].name }}
         </h5>
       </div>
-      <div class="q-pb-md" style="margin-top: -30px;">
-        <p class="text-grey-6 text-center">
-          TATOOINE
-        </p>
+      <div class="q-pb-md" style="margin-top: -30px">
+        <p class="text-grey-6 text-center">TATOOINE</p>
         <template v-for="film in data" :key="film">
           <p class="q-mt-md">
             Episode III: <span class="text-bold">{{ film.episode }}</span>
@@ -43,13 +41,13 @@
     <div class="row q-mb-md">
       <q-card style="width: 41%" class="col-6 q-ml-lg q-mr-sm">
         <p class="sub-title-size text-grey-6 q-pa-sm">HOME WORLD</p>
-        <a class=" text-links flex flex-center q-pb-lg" href="#">{{
+        <a class="text-links flex flex-center q-pb-lg" href="#">{{
           data[0].homeWorld
         }}</a>
       </q-card>
       <q-card style="width: 41%" class="col-6 q-mr-lg q-ml-sm">
         <p class="sub-title-size text-grey-6 q-pa-sm">SPECIES</p>
-        <a class=" text-links flex flex-center q-pb-lg" href="#">{{
+        <a class="text-links flex flex-center q-pb-lg" href="#">{{
           data[1].species
         }}</a>
       </q-card>
@@ -123,96 +121,28 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
 import api from '../services/api';
+import { useRoute } from 'vue-router';
 
-type Film = {
-  poster: string;
-  title: string;
-  starships: string;
-  vehicles: string;
-  episode: string;
-  name: string;
-  homeWorld: string;
-  species: string;
-  DOB: string;
-  HEIGHT: string;
-  MASS: string;
-  GENDER: string;
-  HAIR: string;
-  SKIN: string;
-};
+
 export default defineComponent({
-  setup () {
+  setup() {
+    const route = useRoute();
+    const character = ref([]);
 
-    const character = ref([])
-    console.log(character)
 
     const fetchCharacter = async () => {
-      await api.get('people/').then((response) => {
-        character.value = response.data.results
-      })
-    }
-
-    onMounted(fetchCharacter)
-
+      const id = route.params.id
+      await api.get(`people/${id}`).then((response) => {
+        character.value = response.data;
+      });
+    };
 
 
+    onMounted(fetchCharacter);
 
-    const data = [
-      {
-        poster:
-          'https://images-na.ssl-images-amazon.com/images/I/91eOgodm4nL.jpg',
-        title: 'Revenge of the Sith',
-        starships: 'X-wing',
-        vehicles: 'SnowSpeeder',
-        episode: 'Revenge of the Sith',
-        name: 'Luke Skywalker',
-        homeWorld: 'Tatooine',
-        species: 'HUMAN',
-        DOB: '19BBY',
-        HEIGHT: '172 cm',
-        MASS: '77kg',
-        GENDER: 'male',
-        HAIR: 'blond',
-        SKIN: 'fair'
-      },
-      {
-        poster:
-          'https://images-na.ssl-images-amazon.com/images/I/91eOgodm4nL.jpg',
-        title: 'Revenge of the Sith',
-        starships: 'X-wing',
-        vehicles: 'SnowSpeeder',
-        episode: 'Revenge of the Sith',
-        name: 'Luke Skywalker',
-        homeWorld: 'Tatooine',
-        species: 'HUMAN',
-        DOB: '19BBY',
-        HEIGHT: '172 cm',
-        MASS: '77kg',
-        GENDER: 'male',
-        HAIR: 'blond',
-        SKIN: 'fair'
-      },
-      {
-        poster:
-          'https://images-na.ssl-images-amazon.com/images/I/91eOgodm4nL.jpg',
-        title: 'Revenge of the Sith',
-        starships: 'X-wing',
-        vehicles: 'SnowSpeeder',
-        episode: 'Revenge of the Sith',
-        name: 'Luke Skywalker',
-        homeWorld: 'Tatooine',
-        species: 'HUMAN',
-        DOB: '19BBY',
-        HEIGHT: '172 cm',
-        MASS: '77kg',
-        GENDER: 'male',
-        HAIR: 'blond',
-        SKIN: 'fair'
-      }
-    ] as Film[];
 
-    return { data,  character};
-  }
+    return { data, character };
+  },
 });
 </script>
 

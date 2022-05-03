@@ -18,27 +18,27 @@
         >
           FILMS
         </p>
-        <p class="text-bold text-h6 q-mr-md">PEOPLE</p>
+        <p class="text-bold text-h6 q-mr-md cursor-pointer">PEOPLE</p>
         <p class="text-h6 q-mr-md text-grey-7">SPECIES</p>
       </div>
     </div>
 
     <div class="flex justify-evenly bg-primary">
-      <template v-for="film in characters" :key="film">
+      <template v-for="character in characters" :key="character">
         <q-card
           clickable="true"
-          @click="$router.push('/person')"
-          class="shadow-17 size-card q-mb-sm"
+          @click="showData(character.url)"
+          class="shadow-17 size-card q-mb-sm cursor-pointer"
         >
           <q-card-section class="q-pa-sm">
             <img
               width="100"
               height="120"
               src="../assets/no-image.jpeg"
-              :alt="film.alt"
+              :alt="character.alt"
             />
             <p class="text-center text-caption text-bold">
-                {{ film.name }}
+                {{ character.name }}
             </p>
           </q-card-section>
         </q-card>
@@ -49,11 +49,13 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import api from '../services/api';
 
 export default defineComponent({
   setup () {
     const characters = ref([]);
+    console.log(characters)
 
     const fetchCharacters = async () => {
       await api.get('/people').then(response => {
@@ -61,9 +63,17 @@ export default defineComponent({
       });
     };
 
+
+    const router = useRouter();
+
+    const showData = (url: string) => {
+      const id = url.substring(url.length - 2, url.length - 1)
+     void router.push(`/person/${id}`)
+    }
+
     onMounted(fetchCharacters);
 
-    return { characters };
+    return { characters, showData };
   }
 });
 </script>

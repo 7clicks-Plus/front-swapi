@@ -11,7 +11,7 @@
         <span class="text-bold text-subtitle1">OMG! </span> STAR WARS
       </p>
       <div class="flex">
-        <p class="text-bold text-h6 q-mr-md">FILMS</p>
+        <p class="text-bold text-h6 q-mr-md cursor-pointer">FILMS</p>
         <p
           clickable
           @click="$router.push('/People')"
@@ -28,10 +28,15 @@
         <q-card
           clickable="true"
           @click="$router.push('/character')"
-          class="shadow-17 size-card q-mb-md"
+          class="shadow-17 size-card q-mb-md cursor-pointer"
         >
           <q-card-section class="q-pa-sm">
-            <img width="100" height="120" src="../assets/no-image.jpeg" :alt="film.alt" />
+            <img
+              width="100"
+              height="120"
+              src="../assets/no-image.jpeg"
+              :alt="film.alt"
+            />
             <p class="text-center text-caption text-bold">
               {{ film.title }}
             </p>
