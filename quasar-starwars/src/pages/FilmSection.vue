@@ -21,11 +21,7 @@
         class="size-card flex flex-center q-mt-lg q-mr-lg q-ml-lg q-mb-md"
         style="position: relative"
       >
-        <img
-          src="../assets/no-image.jpeg"
-          alt="Fiml"
-          class="img-film shadow-8"
-        />
+        <img src="images/no-image.jpeg" alt="Fiml" class="img-film shadow-8" />
         <div style="width: 85%">
           <h5 class="text-bold text-uppercase border-name-film text-center">
             {{ film.title }}
@@ -52,7 +48,7 @@
       <div class="row">
         <template v-for="ch in film.characters" :key="ch">
           <div style="width: 150px" class="q-ml-lg">
-            <img width="150" src="../assets/no-image.jpeg" alt="" />
+            <img width="150" src="images/no-image.jpeg" alt="" />
             <p class="text-caption text-center text-bold">
               {{ ch[ch] }}
             </p>
@@ -65,7 +61,7 @@
       <div class="row">
         <template v-for="vehicle in film.vehicles" :key="vehicle">
           <div style="width: 150px" class="q-ml-lg">
-            <img width="150" src="../assets/no-image.jpeg" alt="" />
+            <img width="150" src="images/no-image.jpeg" alt="" />
             <p class="text-caption text-center text-bold">
               {{ vehicle.vehicles }}
             </p>
@@ -80,9 +76,11 @@
 import { defineComponent, onMounted, ref } from 'vue';
 import api from '../services/api';
 import { useRoute } from 'vue-router';
-import Loading from '../components/molecules/Loading.vue';
+import Loading from 'components/molecules/Loading.vue';
 
 export default defineComponent({
+  components: { Loading },
+
   setup() {
     const route = useRoute();
     const film = ref([]);

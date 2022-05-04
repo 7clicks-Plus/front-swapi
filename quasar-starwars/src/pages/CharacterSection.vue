@@ -22,7 +22,7 @@
         style="position: relative"
       >
         <img
-          src="../assets/no-image.jpeg"
+          src="images/no-image.jpeg"
           alt="Character"
           class="img-character shadow-8"
         />
@@ -90,7 +90,7 @@
       <div class="row">
         <template v-for="film in character" :key="film">
           <div style="width: 105px" class="q-ml-md">
-            <img width="100" src="../assets/no-image.jpeg" alt="" />
+            <img width="100" src="images/no-image.jpeg" alt="" />
             <p class="text-caption text-center text-bold">{{ film.film }}</p>
           </div>
         </template>
@@ -101,7 +101,7 @@
       <div class="row">
         <template v-for="starship in character" :key="starship">
           <div style="width: 150px" class="q-ml-lg">
-            <img width="150" src="../assets/no-image.jpeg" alt="" />
+            <img width="150" src="images/no-image.jpeg" alt="" />
             <p class="text-caption text-center text-bold">
               {{ starship.starships }}
             </p>
@@ -114,7 +114,7 @@
       <div class="row">
         <template v-for="vehicle in character" :key="vehicle">
           <div style="width: 150px" class="q-ml-lg">
-            <img width="150" src="../assets/no-image.jpeg" alt="" />
+            <img width="150" src="images/no-image.jpeg" alt="" />
             <p class="text-caption text-center text-bold">
               {{ vehicle.vehicles }}
             </p>
@@ -129,9 +129,11 @@
 import { useRoute } from 'vue-router';
 import { defineComponent, onMounted, ref } from 'vue';
 import api from '../services/api';
-import Loading from '../components/molecules/Loading.vue';
+import Loading from 'components/molecules/Loading.vue';
 
 export default defineComponent({
+  components: { Loading },
+
   setup() {
     const route = useRoute();
     const character = ref([]);

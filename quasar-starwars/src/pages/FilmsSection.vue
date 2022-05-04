@@ -13,7 +13,7 @@
           class="shadow-1 size-card q-mb-md cursor-pointer"
         >
           <q-card-section class="q-pa-sm">
-            <img width="100" src="../assets/no-image.jpeg" :alt="film.alt" />
+            <img width="100" src="images/no-image.jpeg" :alt="film.alt" />
             <p class="text-center text-caption text-bold">
               {{ film.title }}
             </p>
@@ -27,15 +27,17 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import api from '../services/api';
+import api from 'src/services/api';
 import Header from 'components/molecules/Header.vue';
 import SubHeader from 'components/molecules/SubHeader.vue';
-import Loading from '../components/molecules/Loading.vue';
+import Loading from 'components/molecules/Loading.vue';
+
 export default defineComponent({
   components: { Header, SubHeader, Loading },
   setup() {
     const films = ref([]);
     const loading = ref(true);
+
     const fetchFilms = async () => {
       const response = await api.get('/films');
       films.value = response.data.results;

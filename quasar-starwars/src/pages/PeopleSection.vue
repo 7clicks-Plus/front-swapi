@@ -13,11 +13,7 @@
           class="shadow-1 size-card q-mb-sm cursor-pointer"
         >
           <q-card-section class="q-pa-sm">
-            <img
-              width="100"
-              src="../assets/no-image.jpeg"
-              :alt="character.alt"
-            />
+            <img width="100" src="images/no-image.jpeg" :alt="character.alt" />
             <p class="text-center text-caption text-bold">
               {{ character.name }}
             </p>

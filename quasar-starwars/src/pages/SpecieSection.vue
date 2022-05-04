@@ -22,7 +22,7 @@
         style="position: relative"
       >
         <img
-          src="../assets/no-image.jpeg"
+          src="images/no-image.jpeg"
           alt="Fiml"
           class="img-specie shadow-8"
         />
@@ -52,7 +52,7 @@
       <div class="row">
         <template v-for="item in specie.people" :key="item">
           <div style="width: 150px" class="q-ml-lg">
-            <img width="150" src="../assets/no-image.jpeg" alt="" />
+            <img width="150" src="images/no-image.jpeg" alt="" />
             <p class="text-caption text-center text-bold">
               {{ item.item }}
             </p>
@@ -65,7 +65,7 @@
       <div class="row">
         <template v-for="film in specie.films" :key="film">
           <div style="width: 150px" class="q-ml-lg">
-            <img width="150" src="../assets/no-image.jpeg" alt="" />
+            <img width="150" src="images/no-image.jpeg" alt="" />
             <p class="text-caption text-center text-bold">
               {{ film.films }}
             </p>
@@ -80,9 +80,11 @@
 import { defineComponent, onMounted, ref } from 'vue';
 import api from '../services/api';
 import { useRoute } from 'vue-router';
-import Loading from '../components/molecules/Loading.vue';
+import Loading from 'components/molecules/Loading.vue';
 
 export default defineComponent({
+  components: { Loading },
+
   setup() {
     const route = useRoute();
     const specie = ref([]);

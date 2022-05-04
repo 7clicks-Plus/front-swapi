@@ -6,14 +6,14 @@
     <Loading v-if="loading" />
 
     <div class="flex justify-evenly bg-primary">
-      <template v-for="specie in species" :key="specie">
+      <template v-for="specie in species" :key="specie.url">
         <q-card
           clickable="true"
           @click="showData(specie.url)"
           class="shadow-1 size-card q-mb-sm cursor-pointer"
         >
           <q-card-section class="q-pa-sm">
-            <img width="100" src="../assets/no-image.jpeg" :alt="specie.alt" />
+            <img width="100" src="images/no-image.jpeg" :alt="specie.name" />
             <p class="text-center text-caption text-bold">
               {{ specie.name }}
             </p>
@@ -26,6 +26,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
+import { Specie } from 'src/models';
 import { useRouter } from 'vue-router';
 import api from '../services/api';
 import Header from 'components/molecules/Header.vue';
@@ -35,13 +36,12 @@ import SubHeader from 'src/components/molecules/SubHeader.vue';
 export default defineComponent({
   components: { Header, SubHeader, Loading },
   setup() {
-    const species = ref([]);
-    console.log(species);
+    const species = ref<Specie[]>([]);
     const loading = ref(true);
 
     const fetchSpecies = async () => {
-      const response = await api.get('/species');
-      species.value = response.data.results;
+      const { data } = await api.get('/species');
+      species.value = data.results;
       loading.value = false;
     };
 

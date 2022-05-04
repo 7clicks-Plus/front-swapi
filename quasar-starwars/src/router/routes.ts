@@ -3,25 +3,13 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('src/layouts/Films.vue'),
-    children: [
-      {
-        path: '',
-        name: 'films',
-        component: () => import('pages/FilmsSection.vue'),
-      },
-    ],
+    name: 'films',
+    component: () => import('pages/FilmsSection.vue'),
   },
   {
     path: '/people',
-    component: () => import('src/layouts/People.vue'),
-    children: [
-      {
-        path: '',
-        name: 'people',
-        component: () => import('pages/PeopleSection.vue'),
-      },
-    ],
+    component: () => import('pages/PeopleSection.vue'),
+    name: 'people',
   },
   {
     path: '/person/:id',
