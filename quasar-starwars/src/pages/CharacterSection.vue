@@ -126,9 +126,10 @@
 </template>
 
 <script lang="ts">
+import { useRoute } from 'vue-router';
 import { defineComponent, onMounted, ref } from 'vue';
 import api from '../services/api';
-import { useRoute } from 'vue-router';
+import Loading from '../components/molecules/Loading.vue';
 
 export default defineComponent({
   setup() {
