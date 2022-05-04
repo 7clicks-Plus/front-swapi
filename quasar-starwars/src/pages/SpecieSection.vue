@@ -17,58 +17,63 @@
 
     <Loading v-if="loading" />
     <div v-else>
-      <q-card
-        class="size-card flex flex-center q-mt-lg q-mr-lg q-ml-lg q-mb-md"
-        style="position: relative"
-      >
+      <TailCard class="q-mb-md">
         <img
           src="images/no-image.jpeg"
-          alt="Fiml"
-          class="img-specie shadow-8"
+          alt="Character"
+          class="img-character shadow-8"
         />
-        <div style="width: 85%">
-          <h5 class="text-bold text-uppercase border-name-specie text-center">
-            {{ specie.name }}
-          </h5>
-        </div>
-      </q-card>
-      <div class="row q-mb-md">
-        <q-card style="width: 41%" class="col-6 q-ml-lg q-mr-sm">
-          <p class="sub-title-size text-grey-6 q-pa-sm">Language</p>
-          <a class="text-links flex flex-center q-pb-lg" href="#">
-            {{ specie.language }}
-          </a>
-        </q-card>
-        <q-card style="width: 41%" class="col-6 q-mr-lg q-ml-sm">
-          <p class="sub-title-size text-grey-6 q-pa-sm">Classification</p>
-          <a class="text-links flex flex-center q-pb-lg" href="#">
-            {{ specie.classification }}
-          </a>
-        </q-card>
-      </div>
 
-      <h6 class="q-ml-lg text-uppercase text-grey-8">people</h6>
-
-      <div class="row">
-        <template v-for="item in specie.people" :key="item">
-          <div style="width: 150px" class="q-ml-lg">
-            <img width="150" src="images/no-image.jpeg" alt="" />
-            <p class="text-caption text-center text-bold">
-              {{ item.item }}
+        <q-card-section class="full-width">
+          <div style="width: 85%">
+            <h5
+              class="text-bold text-uppercase border-name-character text-center"
+            >
+              {{ state.specie.name }}
+            </h5>
+          </div>
+        </q-card-section>
+        <q-card-section class="full-width">
+          <div class="q-pb-md" style="margin-top: -30px">
+            <p class="text-grey-6 text-center text-uppercase">
+              {{ state.specie.designation }}
             </p>
+          </div>
+        </q-card-section>
+      </TailCard>
+
+      <span
+        class="q-ml-lg text-uppercase text-grey-8 text-weight-bold"
+        style="font-size: 20px"
+        >Films</span
+      >
+
+      <div class="scroll-list full-width justify-start q-pa-lg">
+        <template v-for="film in state.films" :key="film">
+          <div style="display: inline-block" class="q-mx-md">
+            <div class="text-center">
+              <img width="100" src="images/no-image.jpeg" alt="" />
+              <p class="text-caption text-center text-bold">{{ film.title }}</p>
+            </div>
           </div>
         </template>
       </div>
 
-      <h6 class="q-ml-lg text-uppercase text-grey-8">Films</h6>
+      <span
+        class="q-ml-lg text-uppercase text-grey-8 text-weight-bold"
+        style="font-size: 20px"
+        >Characters</span
+      >
 
-      <div class="row">
-        <template v-for="film in specie.films" :key="film">
-          <div style="width: 150px" class="q-ml-lg">
-            <img width="150" src="images/no-image.jpeg" alt="" />
-            <p class="text-caption text-center text-bold">
-              {{ film.films }}
-            </p>
+      <div class="scroll-list full-width justify-start q-pa-lg">
+        <template v-for="character in state.characters" :key="character">
+          <div style="display: inline-block" class="q-mx-md">
+            <div class="text-center">
+              <img width="100" src="images/no-image.jpeg" alt="" />
+              <p class="text-caption text-center text-bold">
+                {{ character.name }}
+              </p>
+            </div>
           </div>
         </template>
       </div>
@@ -77,48 +82,84 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
-import api from '../services/api';
 import { useRoute } from 'vue-router';
+import { defineComponent, onMounted, ref, reactive } from 'vue';
+import api from '../services/api';
 import Loading from 'components/molecules/Loading.vue';
-import { Specie } from 'src/models';
+import { TailCard } from '../components/bosons';
+import { Character, Film, Specie } from 'src/models';
+import { removeApiBase, convertToRomanNumeral } from 'src/utils';
 
 export default defineComponent({
-  components: { Loading },
+  components: { Loading, TailCard },
 
   setup() {
     const route = useRoute();
-    const specie = ref();
-    const loading = ref(true);
 
-    const fetchSpecie = async () => {
+    const state = reactive({
+      specie: {
+        people: [''],
+      } as Specie,
+      characters: [] as Character[],
+      films: [] as Film[],
+    });
+
+    const loading = ref(false);
+
+    const fetchData = async () => {
       const id = route.params.id;
       const response = await api.get(`species/${id}`);
-      specie.value = response.data as Specie[];
-      loading.value = false;
+      state.specie = response.data as Specie;
     };
 
-    onMounted(fetchSpecie);
+    const fetchCharacters = async () => {
+      state.specie.people.forEach(async (url: string) => {
+        const resumedUrl = removeApiBase(url);
+        const response = await api.get(resumedUrl);
+        const character = response.data as Character;
+        state.characters.push(character);
+      });
+    };
 
-    return { specie, loading };
+    const fetchFilms = async () => {
+      state.specie.films.forEach(async (url: string) => {
+        const resumedUrl = removeApiBase(url);
+        const response = await api.get(resumedUrl);
+        const film = response.data as Film;
+        state.films.push(film);
+      });
+    };
+
+    onMounted(async () => {
+      loading.value = true;
+
+      await Promise.all([
+        await fetchData(),
+        await fetchCharacters(),
+        await fetchFilms(),
+      ]);
+
+      loading.value = false;
+    });
+
+    return { state, loading, convertToRomanNumeral };
   },
 });
 </script>
 
 <style scoped>
-.img-specie {
+.img-character {
   width: 230px;
   position: absolute;
   top: -85px;
-  left: 50px;
   border: 3px solid rgb(198, 209, 219);
 }
 
 .size-card {
-  padding-top: 8rem;
+  padding-top: 100px;
 }
 
-.border-name-specie {
+.border-name-character {
   border-top: 1px solid rgb(241, 206, 5);
   border-bottom: 1px solid rgb(241, 206, 5);
   padding: 1rem 0 1rem 0;
@@ -130,5 +171,10 @@ export default defineComponent({
 
 .text-links {
   color: rgb(214, 185, 21);
+}
+
+.scroll-list {
+  overflow: auto;
+  white-space: nowrap;
 }
 </style>

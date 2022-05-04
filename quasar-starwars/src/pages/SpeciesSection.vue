@@ -26,7 +26,6 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue';
-import { Specie } from 'src/models';
 import { useRouter } from 'vue-router';
 import api from '../services/api';
 import Header from 'components/molecules/Header.vue';

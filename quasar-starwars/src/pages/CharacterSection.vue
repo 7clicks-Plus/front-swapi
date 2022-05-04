@@ -119,11 +119,15 @@
         </div>
       </div>
 
-      <h6 class="q-ml-lg text-uppercase text-grey-8">Films</h6>
+      <span
+        class="q-ml-lg text-uppercase text-grey-8 text-weight-bold"
+        style="font-size: 20px"
+        >Films</span
+      >
 
-      <div class="scroll-list">
+      <div class="scroll-list full-width justify-start q-pa-lg">
         <template v-for="film in state.films" :key="film">
-          <div class="col-4">
+          <div style="display: inline-block" class="q-mx-md">
             <div class="text-center">
               <img width="100" src="images/no-image.jpeg" alt="" />
               <p class="text-caption text-center text-bold">{{ film.title }}</p>
@@ -132,28 +136,40 @@
         </template>
       </div>
 
-      <h6 class="q-ml-lg text-uppercase text-grey-8">Starships</h6>
+      <span
+        class="q-ml-lg text-uppercase text-grey-8 text-weight-bold"
+        style="font-size: 20px"
+        >Starships</span
+      >
 
-      <div class="row q-col-gutter-x-md q-px-lg q-py-xs">
+      <div class="scroll-list full-width justify-start q-pa-lg">
         <template v-for="starship in state.starships" :key="starship">
-          <div class="q-ml-lg col-4">
-            <img src="images/no-image.jpeg" alt="" />
-            <p class="text-caption text-center text-bold">
-              {{ starship.name }}
-            </p>
+          <div style="display: inline-block" class="q-mx-md">
+            <div class="text-center">
+              <img width="100" src="images/no-image.jpeg" alt="" />
+              <p class="text-caption text-center text-bold">
+                {{ starship.name }}
+              </p>
+            </div>
           </div>
         </template>
       </div>
 
-      <h6 class="q-ml-lg text-uppercase text-grey-8">vehicles</h6>
+      <span
+        class="q-ml-lg text-uppercase text-grey-8 text-weight-bold"
+        style="font-size: 20px"
+        >Vehicles</span
+      >
 
-      <div class="row">
+      <div class="scroll-list full-width justify-start q-pa-lg">
         <template v-for="vehicle in state.vehicles" :key="vehicle">
-          <div style="width: 150px" class="q-ml-lg">
-            <img width="150" src="images/no-image.jpeg" alt="" />
-            <p class="text-caption text-center text-bold">
-              {{ vehicle.name }}
-            </p>
+          <div style="display: inline-block" class="q-mx-md">
+            <div class="text-center">
+              <img width="100" src="images/no-image.jpeg" alt="" />
+              <p class="text-caption text-center text-bold">
+                {{ vehicle.name }}
+              </p>
+            </div>
           </div>
         </template>
       </div>
@@ -212,6 +228,24 @@ export default defineComponent({
       state.homeworld = homeworld;
     };
 
+    const fetchVehicles = async () => {
+      state.character.vehicles.forEach(async (url: string) => {
+        const resumedUrl = removeApiBase(url);
+        const response = await api.get(resumedUrl);
+        const vehicle = response.data as Vehicle;
+        state.vehicles.push(vehicle);
+      });
+    };
+
+    const fetchStarships = async () => {
+      state.character.starships.forEach(async (url: string) => {
+        const resumedUrl = removeApiBase(url);
+        const response = await api.get(resumedUrl);
+        const starship = response.data as Starship;
+        state.starships.push(starship);
+      });
+    };
+
     const fetchSpecies = async () => {
       state.character.species.forEach(async (url: string) => {
         const resumedUrl = removeApiBase(url);
@@ -229,6 +263,8 @@ export default defineComponent({
         await fetchFilms(),
         await fetchHomeLand(),
         await fetchSpecies(),
+        await fetchVehicles(),
+        await fetchStarships(),
       ]);
 
       loading.value = false;
@@ -263,5 +299,10 @@ export default defineComponent({
 
 .text-links {
   color: rgb(214, 185, 21);
+}
+
+.scroll-list {
+  overflow: auto;
+  white-space: nowrap;
 }
 </style>
