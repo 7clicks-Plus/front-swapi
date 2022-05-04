@@ -17,93 +17,129 @@
 
     <Loading v-if="loading" />
     <div v-else>
-      <q-card
-        class="size-card flex flex-center q-mt-lg q-mr-lg q-ml-lg q-mb-md"
-        style="position: relative"
-      >
+      <TailCard>
         <img
           src="images/no-image.jpeg"
           alt="Character"
           class="img-character shadow-8"
         />
-        <div style="width: 85%">
-          <h5
-            class="text-bold text-uppercase border-name-character text-center"
-          >
-            {{ character.name }}
-          </h5>
-        </div>
-        <div class="q-pb-md" style="margin-top: -30px">
-          <p class="text-grey-6 text-center">TATOOINE</p>
-          <template v-for="film in data" :key="film">
-            <p class="q-mt-md">
-              Episode III: <span class="text-bold">{{ film.episode }}</span>
+
+        <q-card-section class="full-width">
+          <div style="width: 85%">
+            <h5
+              class="text-bold text-uppercase border-name-character text-center"
+            >
+              {{ state.character.name }}
+            </h5>
+          </div>
+        </q-card-section>
+        <q-card-section class="full-width">
+          <div class="q-pb-md" style="margin-top: -30px">
+            <p class="text-grey-6 text-center text-uppercase">
+              {{ state.homeworld.name }}
             </p>
-          </template>
+            <template v-for="film in state.films" :key="film">
+              <p class="q-mt-md">
+                Episódio {{ convertToRomanNumeral(film.episode_id) }}:
+                <span class="text-bold">{{ film.title }}</span>
+              </p>
+            </template>
+          </div>
+        </q-card-section>
+      </TailCard>
+
+      <div class="row q-col-gutter-x-md q-pa-lg">
+        <div class="col-6">
+          <q-card>
+            <p class="sub-title-size text-grey-6 q-pa-sm">HOME WORLD</p>
+            <a class="text-links flex flex-center q-pb-lg" href="#">{{
+              state.homeworld.name
+            }}</a>
+          </q-card>
         </div>
-      </q-card>
-      <div class="row q-mb-md">
-        <q-card style="width: 41%" class="col-6 q-ml-lg q-mr-sm">
-          <p class="sub-title-size text-grey-6 q-pa-sm">HOME WORLD</p>
-          <a class="text-links flex flex-center q-pb-lg" href="#">{{
-            character.homeworld
-          }}</a>
-        </q-card>
-        <q-card style="width: 41%" class="col-6 q-mr-lg q-ml-sm">
-          <p class="sub-title-size text-grey-6 q-pa-sm">SPECIES</p>
-          <a class="text-links flex flex-center q-pb-lg" href="#">HUMAN</a>
-        </q-card>
+        <div class="col-6">
+          <q-card>
+            <p class="sub-title-size text-grey-6 q-pa-sm">SPECIES</p>
+            <template v-if="state.species.length">
+              <template v-for="specie in state.species" :key="specie">
+                <a class="text-links flex flex-center q-pb-lg" href="#"
+                  >{{ specie.name }}
+                </a>
+              </template>
+            </template>
+            <a class="text-links flex flex-center q-pb-lg" href="#" v-else
+              >Human
+            </a>
+          </q-card>
+        </div>
       </div>
 
-      <div class="row q-mb-md">
-        <q-card style="width: 26%" class="col-4 q-ml-lg q-mr-sm">
-          <p class="sub-title-size text-grey-6 q-pa-sm">DOB</p>
-          <p class="flex flex-center q-pb-lg">{{ character.birth_year }}</p>
-        </q-card>
-        <q-card style="width: 26%" class="col-4 q-mr-sm q-ml-sm">
-          <p class="sub-title-size text-grey-6 q-pa-sm">HEIGHT</p>
-          <p class="flex flex-center q-pb-lg">{{ character.height }}</p>
-        </q-card>
-        <q-card style="width: 26%" class="col-4 q-mr-lg q-ml-sm">
-          <p class="sub-title-size text-grey-6 q-pa-sm">MASS</p>
-          <p class="flex flex-center q-pb-lg">{{ character.mass }}</p>
-        </q-card>
-      </div>
-
-      <div class="row">
-        <q-card style="width: 26%" class="col-4 q-ml-lg q-mr-sm">
-          <p class="sub-title-size text-grey-6 q-pa-sm">GENDER</p>
-          <p class="flex flex-center q-pb-lg">{{ character.gender }}</p>
-        </q-card>
-        <q-card style="width: 26%" class="col-4 q-mr-sm q-ml-sm">
-          <p class="sub-title-size text-grey-6 q-pa-sm">HAIR</p>
-          <p class="flex flex-center q-pb-lg">{{ character.hair_color }}</p>
-        </q-card>
-        <q-card style="width: 26%" class="col-4 q-mr-lg q-ml-sm">
-          <p class="sub-title-size text-grey-6 q-pa-sm">SKIN</p>
-          <p class="flex flex-center q-pb-lg">{{ character.skin_color }}</p>
-        </q-card>
+      <div class="row q-col-gutter-x-md q-px-lg q-py-xs">
+        <div class="col-4">
+          <q-card>
+            <p class="sub-title-size text-grey-6 q-pa-sm">DOB</p>
+            <p class="flex flex-center q-pb-lg">
+              {{ state.character.birth_year }}
+            </p>
+          </q-card>
+        </div>
+        <div class="col-4">
+          <q-card>
+            <p class="sub-title-size text-grey-6 q-pa-sm">HEIGHT</p>
+            <p class="flex flex-center q-pb-lg">{{ state.character.height }}</p>
+          </q-card>
+        </div>
+        <div class="col-4">
+          <q-card>
+            <p class="sub-title-size text-grey-6 q-pa-sm">MASS</p>
+            <p class="flex flex-center q-pb-lg">{{ state.character.mass }}</p>
+          </q-card>
+        </div>
+        <div class="col-4">
+          <q-card>
+            <p class="sub-title-size text-grey-6 q-pa-sm">GENDER</p>
+            <p class="flex flex-center q-pb-lg">{{ state.character.gender }}</p>
+          </q-card>
+        </div>
+        <div class="col-4">
+          <q-card>
+            <p class="sub-title-size text-grey-6 q-pa-sm">HAIR</p>
+            <p class="flex flex-center q-pb-lg">
+              {{ state.character.hair_color }}
+            </p>
+          </q-card>
+        </div>
+        <div class="col-4">
+          <q-card>
+            <p class="sub-title-size text-grey-6 q-pa-sm">SKIN</p>
+            <p class="flex flex-center q-pb-lg">
+              {{ state.character.skin_color }}
+            </p>
+          </q-card>
+        </div>
       </div>
 
       <h6 class="q-ml-lg text-uppercase text-grey-8">Films</h6>
 
-      <div class="row">
-        <template v-for="film in character" :key="film">
-          <div style="width: 105px" class="q-ml-md">
-            <img width="100" src="images/no-image.jpeg" alt="" />
-            <p class="text-caption text-center text-bold">{{ film.film }}</p>
+      <div class="row q-col-gutter-x-md q-px-lg q-py-xs">
+        <template v-for="film in state.films" :key="film">
+          <div class="col-4">
+            <div class="text-center">
+              <img width="100" src="images/no-image.jpeg" alt="" />
+              <p class="text-caption text-center text-bold">{{ film.title }}</p>
+            </div>
           </div>
         </template>
       </div>
 
       <h6 class="q-ml-lg text-uppercase text-grey-8">Starships</h6>
 
-      <div class="row">
-        <template v-for="starship in character" :key="starship">
-          <div style="width: 150px" class="q-ml-lg">
-            <img width="150" src="images/no-image.jpeg" alt="" />
+      <div class="row q-col-gutter-x-md q-px-lg q-py-xs">
+        <template v-for="starship in state.starships" :key="starship">
+          <div class="q-ml-lg col-4">
+            <img src="images/no-image.jpeg" alt="" />
             <p class="text-caption text-center text-bold">
-              {{ starship.starships }}
+              {{ starship.name }}
             </p>
           </div>
         </template>
@@ -112,11 +148,11 @@
       <h6 class="q-ml-lg text-uppercase text-grey-8">vehicles</h6>
 
       <div class="row">
-        <template v-for="vehicle in character" :key="vehicle">
+        <template v-for="vehicle in state.vehicles" :key="vehicle">
           <div style="width: 150px" class="q-ml-lg">
             <img width="150" src="images/no-image.jpeg" alt="" />
             <p class="text-caption text-center text-bold">
-              {{ vehicle.vehicles }}
+              {{ vehicle.name }}
             </p>
           </div>
         </template>
@@ -127,28 +163,78 @@
 
 <script lang="ts">
 import { useRoute } from 'vue-router';
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, onMounted, ref, reactive } from 'vue';
 import api from '../services/api';
 import Loading from 'components/molecules/Loading.vue';
+import { TailCard } from '../components/bosons';
+import { Character, Film, Planet, Specie, Starship, Vehicle } from 'src/models';
+import { removeApiBase, convertToRomanNumeral } from 'src/utils';
 
 export default defineComponent({
-  components: { Loading },
+  components: { Loading, TailCard },
 
   setup() {
     const route = useRoute();
-    const character = ref([]);
-    const loading = ref(true);
+
+    const state = reactive({
+      character: {
+        films: [''],
+      } as Character,
+      films: [] as Film[],
+      vehicles: [] as Vehicle[],
+      starships: [] as Starship[],
+      homeworld: {} as Planet,
+      species: [] as Specie[],
+    });
+
+    const loading = ref(false);
 
     const fetchCharacter = async () => {
       const id = route.params.id;
       const response = await api.get(`people/${id}`);
-      character.value = response.data;
-      loading.value = false;
+      state.character = response.data as Character;
     };
 
-    onMounted(fetchCharacter);
+    const fetchFilms = async () => {
+      state.character.films.forEach(async (url: string) => {
+        const resumedUrl = removeApiBase(url);
+        const response = await api.get(resumedUrl);
+        const film = response.data as Film;
+        state.films.push(film);
+      });
+    };
 
-    return { character, loading };
+    const fetchHomeLand = async () => {
+      const url = state.character.homeworld;
+      const resumedUrl = removeApiBase(url);
+      const response = await api.get(resumedUrl);
+      const homeworld = response.data as Planet;
+      state.homeworld = homeworld;
+    };
+
+    const fetchSpecies = async () => {
+      state.character.species.forEach(async (url: string) => {
+        const resumedUrl = removeApiBase(url);
+        const response = await api.get(resumedUrl);
+        const specie = response.data as Specie;
+        state.species.push(specie);
+      });
+    };
+
+    onMounted(async () => {
+      loading.value = true;
+
+      await Promise.all([
+        await fetchCharacter(),
+        await fetchFilms(),
+        await fetchHomeLand(),
+        await fetchSpecies(),
+      ]);
+
+      loading.value = false;
+    });
+
+    return { state, loading, convertToRomanNumeral };
   },
 });
 </script>
@@ -158,12 +244,11 @@ export default defineComponent({
   width: 230px;
   position: absolute;
   top: -85px;
-  left: 50px;
   border: 3px solid rgb(198, 209, 219);
 }
 
 .size-card {
-  padding-top: 280px;
+  padding-top: 100px;
 }
 
 .border-name-character {

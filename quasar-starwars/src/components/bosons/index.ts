@@ -1,1 +1,1 @@
-export { default as CardIndex} from './CardIndex.vue'
+export { default as TailCard } from './TailCard.vue';

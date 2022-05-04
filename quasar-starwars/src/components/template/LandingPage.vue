@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import CardIndex from '../bosons/CardIndex.vue';
+import CardIndex from '../bosons/TailCard.vue';
 import LogoIndex from '../atoms/LogoIndex.vue'
 
 export default {
