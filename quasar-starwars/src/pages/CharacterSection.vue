@@ -121,7 +121,7 @@
 
       <h6 class="q-ml-lg text-uppercase text-grey-8">Films</h6>
 
-      <div class="row q-col-gutter-x-md q-px-lg q-py-xs">
+      <div class="scroll-list">
         <template v-for="film in state.films" :key="film">
           <div class="col-4">
             <div class="text-center">

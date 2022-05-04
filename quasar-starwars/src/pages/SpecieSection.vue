@@ -81,19 +81,20 @@ import { defineComponent, onMounted, ref } from 'vue';
 import api from '../services/api';
 import { useRoute } from 'vue-router';
 import Loading from 'components/molecules/Loading.vue';
+import { Specie } from 'src/models';
 
 export default defineComponent({
   components: { Loading },
 
   setup() {
     const route = useRoute();
-    const specie = ref([]);
+    const specie = ref();
     const loading = ref(true);
 
     const fetchSpecie = async () => {
       const id = route.params.id;
       const response = await api.get(`species/${id}`);
-      specie.value = response.data;
+      specie.value = response.data as Specie[];
       loading.value = false;
     };
 
