@@ -14,7 +14,7 @@
     >
       <q-route-tab to="/" exact replace label="FILMS" />
       <q-route-tab to="/people" exact replace label="PEOPLE" />
-      <q-route-tab to="/people" exact replace label="SPECIES" />
+      <q-route-tab to="/species" exact replace label="SPECIES" />
     </q-tabs>
   </div>
 </template>

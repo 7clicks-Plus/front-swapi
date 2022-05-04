@@ -5,17 +5,17 @@
 
     <Loading v-if="loading" />
 
-    <div v-else class="flex justify-start bg-primary">
-      <template v-for="film in films" :key="film">
+    <div class="flex justify-evenly bg-primary">
+      <template v-for="specie in species" :key="specie">
         <q-card
           clickable="true"
-          @click="showData(film.url)"
-          class="shadow-1 size-card q-mb-md cursor-pointer"
+          @click="showData(specie.url)"
+          class="shadow-1 size-card q-mb-sm cursor-pointer"
         >
           <q-card-section class="q-pa-sm">
-            <img width="100" src="../assets/no-image.jpeg" :alt="film.alt" />
+            <img width="100" src="../assets/no-image.jpeg" :alt="specie.alt" />
             <p class="text-center text-caption text-bold">
-              {{ film.title }}
+              {{ specie.name }}
             </p>
           </q-card-section>
         </q-card>
@@ -25,20 +25,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import api from '../services/api';
 import Header from 'components/molecules/Header.vue';
-import SubHeader from 'components/molecules/SubHeader.vue';
 import Loading from '../components/molecules/Loading.vue';
+import SubHeader from 'src/components/molecules/SubHeader.vue';
+
 export default defineComponent({
   components: { Header, SubHeader, Loading },
   setup() {
-    const films = ref([]);
+    const species = ref([]);
+    console.log(species);
     const loading = ref(true);
-    const fetchFilms = async () => {
-      const response = await api.get('/films');
-      films.value = response.data.results;
+
+    const fetchSpecies = async () => {
+      const response = await api.get('/species');
+      species.value = response.data.results;
       loading.value = false;
     };
 
@@ -46,12 +49,12 @@ export default defineComponent({
 
     const showData = (url: string) => {
       const id = url.substring(url.length - 2, url.length - 1);
-      void router.push(`/film/${id}`);
+      void router.push(`/specie/${id}`);
     };
 
-    onMounted(fetchFilms);
+    onMounted(fetchSpecies);
 
-    return { films, showData, loading };
+    return { species, showData, loading };
   },
 });
 </script>
