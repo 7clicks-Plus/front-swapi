@@ -5,7 +5,7 @@
 
     <Loading v-if="loading" />
 
-    <div class="flex justify-evenly bg-primary">
+    <div class="flex justify-start bg-primary">
       <template v-for="character in characters" :key="character">
         <q-card
           clickable="true"

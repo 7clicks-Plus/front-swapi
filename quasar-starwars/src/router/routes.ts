@@ -13,48 +13,24 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/person/:id',
-    component: () => import('src/layouts/Character.vue'),
-    children: [
-      {
-        path: '',
-        name: 'character',
-        component: () => import('pages/CharacterSection.vue'),
-      },
-    ],
+    name: 'character',
+    component: () => import('pages/CharacterSection.vue'),
   },
 
   {
     path: '/film/:id',
-    component: () => import('src/layouts/Character.vue'),
-    children: [
-      {
-        path: '',
-        name: 'film',
-        component: () => import('pages/FilmSection.vue'),
-      },
-    ],
+    name: 'film',
+    component: () => import('pages/FilmSection.vue'),
   },
   {
     path: '/species',
-    component: () => import('src/layouts/People.vue'),
-    children: [
-      {
-        path: '',
-        name: 'species',
-        component: () => import('pages/SpeciesSection.vue'),
-      },
-    ],
+    name: 'species',
+    component: () => import('pages/SpeciesSection.vue'),
   },
   {
     path: '/specie/:id',
-    component: () => import('src/layouts/Character.vue'),
-    children: [
-      {
-        path: '',
-        name: 'specie',
-        component: () => import('pages/SpecieSection.vue'),
-      },
-    ],
+    name: 'specie',
+    component: () => import('pages/SpecieSection.vue'),
   },
 
   // Always leave this as last one,
