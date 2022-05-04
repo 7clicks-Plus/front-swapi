@@ -31,7 +31,7 @@ import api from '../services/api';
 import Header from 'components/molecules/Header.vue';
 import Loading from '../components/molecules/Loading.vue';
 import SubHeader from 'src/components/molecules/SubHeader.vue';
-import { Character } from 'src/models';
+// import { Character } from 'src/models';
 
 export default defineComponent({
   components: { Header, SubHeader, Loading },
