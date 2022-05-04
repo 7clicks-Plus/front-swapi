@@ -36,7 +36,9 @@ import SubHeader from 'src/components/molecules/SubHeader.vue';
 export default defineComponent({
   components: { Header, SubHeader, Loading },
   setup() {
-    const species = ref<Specie[]>([]);
+    // const species = ref<Specie[]>([]);
+    const species = ref([]);
+
     const loading = ref(true);
 
     const fetchSpecies = async () => {

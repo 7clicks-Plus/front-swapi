@@ -31,15 +31,18 @@ import api from 'src/services/api';
 import Header from 'components/molecules/Header.vue';
 import SubHeader from 'components/molecules/SubHeader.vue';
 import Loading from 'components/molecules/Loading.vue';
+// import { Film } from 'src/models';
 
 export default defineComponent({
   components: { Header, SubHeader, Loading },
   setup() {
     const films = ref([]);
     const loading = ref(true);
+    // let data = ref();
 
     const fetchFilms = async () => {
       const response = await api.get('/films');
+      // data = response.data.results;
       films.value = response.data.results;
       loading.value = false;
     };

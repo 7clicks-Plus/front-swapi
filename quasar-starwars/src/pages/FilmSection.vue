@@ -77,19 +77,20 @@ import { defineComponent, onMounted, ref } from 'vue';
 import api from '../services/api';
 import { useRoute } from 'vue-router';
 import Loading from 'components/molecules/Loading.vue';
+import { Film } from 'src/models';
 
 export default defineComponent({
   components: { Loading },
 
   setup() {
     const route = useRoute();
-    const film = ref([]);
+    const film = ref();
     const loading = ref(true);
 
     const fetchFilm = async () => {
       const id = route.params.id;
       const response = await api.get(`films/${id}`);
-      film.value = response.data;
+      film.value = response.data as Film;
       loading.value = false;
     };
 
